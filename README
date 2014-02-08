@@ -1,0 +1,3 @@
+Embody is a C library that lets you define types for your data to allow easier
+manipulation in structures like arrays and hash maps.
+It also comes with an implementation of array and hash map.
