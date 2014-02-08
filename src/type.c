@@ -71,8 +71,9 @@ emb_type_id_t emb_type_get_id(const char *name)
 	}
 
 	if (i >= emb_types_size) {
-		emb_types = realloc(emb_types, emb_types_size * 2);
-		memset(emb_types + emb_types_size, 0, emb_types_size);
+		emb_types = realloc(emb_types, emb_types_size * 2 * sizeof(emb_type_t *));
+		memset(emb_types + emb_types_size, 0, emb_types_size * sizeof(emb_type_t *));
+		emb_types_size = emb_types_size * 2;
 	}
 
 	if (emb_types[i] == NULL) {
