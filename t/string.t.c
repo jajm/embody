@@ -1,6 +1,5 @@
 #include <libtap13/tap.h>
 #include "embody.h"
-#include "type.h"
 
 int main()
 {

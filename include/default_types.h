@@ -2,8 +2,6 @@
 #define emb_default_types_h_included
 
 #include <stdint.h>
-#include "embody.h"
-#include "type.h"
 
 int ** emb_new_int(int i);
 int8_t ** emb_new_int8(int8_t i);

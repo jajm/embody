@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "type.h"
-#include "embody.h"
+#include "container.h"
 #include "default_types.h"
 
 #define emb_default_type_func_def(type, name) \
