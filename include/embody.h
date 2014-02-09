@@ -17,6 +17,9 @@ emb_type_id_wrapped(
 #define emb_type_id(data_pp) \
 	emb_type_id_wrapped((void **)data_pp)
 
+#define emb_type(data_pp) \
+	emb_type_get_name(emb_type_id(data_pp))
+
 void
 emb_free_wrapped(
 	void **data_pp
