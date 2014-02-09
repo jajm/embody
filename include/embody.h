@@ -2,30 +2,7 @@
 #define emb_embody_h_included
 
 #include "type.h"
-
-void **
-emb_new(
-	emb_type_id_t type_id,
-	void *data_p
-);
-
-emb_type_id_t
-emb_type_id_wrapped(
-	void **data_pp
-);
-
-#define emb_type_id(data_pp) \
-	emb_type_id_wrapped((void **)data_pp)
-
-#define emb_type(data_pp) \
-	emb_type_get_name(emb_type_id(data_pp))
-
-void
-emb_free_wrapped(
-	void **data_pp
-);
-
-#define emb_free(data_pp) \
-	emb_free_wrapped((void **)data_pp)
+#include "container.h"
+#include "default_types.h"
 
 #endif /* ! emb_embody_h_included */

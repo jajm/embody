@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "type.h"
-#include "embody.h"
+#include "container.h"
 
 #define container_of(ptr, type, member) \
 	(type *)( (char *)ptr - offsetof(type, member) )
@@ -11,7 +11,7 @@ typedef struct {
 	void *data;
 } emb_container_t;
 
-void ** emb_new(emb_type_id_t type_id, void *data_p)
+void ** emb_container_new(emb_type_id_t type_id, void *data_p)
 {
 	emb_container_t *embc;
 
@@ -22,7 +22,7 @@ void ** emb_new(emb_type_id_t type_id, void *data_p)
 	return &(embc->data);
 }
 
-emb_type_id_t emb_type_id_wrapped(void **data_pp)
+emb_type_id_t emb_container_type_id(void **data_pp)
 {
 	emb_container_t *embc;
 
@@ -30,7 +30,7 @@ emb_type_id_t emb_type_id_wrapped(void **data_pp)
 	return embc->type_id;
 }
 
-void emb_free_wrapped(void **data_pp)
+void emb_container_free(void **data_pp)
 {
 	emb_container_t *embc;
 	void (*free_callback)(void *) = NULL;
