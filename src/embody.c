@@ -11,7 +11,6 @@ typedef struct {
 	void *data;
 } emb_container_t;
 
-
 void ** emb_new(emb_type_id_t type_id, void *data_p)
 {
 	emb_container_t *embc;
@@ -26,7 +25,7 @@ void ** emb_new(emb_type_id_t type_id, void *data_p)
 emb_type_id_t emb_type_id_wrapped(void **data_pp)
 {
 	emb_container_t *embc;
-	
+
 	embc = container_of(data_pp, emb_container_t, data);
 	return embc->type_id;
 }
@@ -38,7 +37,6 @@ void emb_free_wrapped(void **data_pp)
 	
 	embc = container_of(data_pp, emb_container_t, data);
 
-	// TODO: Free data
 	free_callback = emb_type_get_callback(embc->type_id, "free");
 	if (free_callback) {
 		free_callback(embc->data);

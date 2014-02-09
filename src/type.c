@@ -33,18 +33,9 @@ static emb_type_t * emb_type_new(const char *name)
 	type->callbacks = gds_hash_map_new(16,
 		(gds_hash_cb) emb_callback_name_hash,
 		(gds_cmpkey_cb) strcmp);
-	
+
 	return type;
 }
-
-//static void emb_type_free(emb_type_t *type)
-//{
-//	if (type != NULL) {
-//		gds_hash_map_free(type->callbacks, free, NULL);
-//		free(type->name);
-//		free(type);
-//	}
-//}
 
 static emb_type_t **emb_types = NULL;
 static size_t emb_types_size = 0;
@@ -102,7 +93,7 @@ int emb_type_register_callback(emb_type_id_t type_id, const char *name,
 
 	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
 		return -1;
-	
+
 	callbacks = emb_types[type_id]->callbacks;
 	key = malloc(strlen(name) + 1);
 	strcpy(key, name);
@@ -116,7 +107,7 @@ void * emb_type_get_callback(emb_type_id_t type_id, const char *name)
 
 	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
 		return NULL;
-	
+
 	callbacks = emb_types[type_id]->callbacks;
 
 	return gds_hash_map_get(callbacks, name);
