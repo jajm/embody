@@ -1,24 +1,12 @@
 #include <stdlib.h>
 #include <string.h>
-#include <libgends/hash_map.h>
+#include "hash_table.h"
 #include "type.h"
 
 typedef struct {
 	char *name;
-	gds_hash_map_t *callbacks;
+	emb_hash_table_t *callbacks;
 } emb_type_t;
-
-static unsigned int emb_callback_name_hash(const char *name, unsigned int size)
-{
-	unsigned int hash = 0, i = 0;
-
-	while (name[i] != '\0') {
-		hash += name[i] * (i+1);
-		i++;
-	}
-
-	return hash % size;
-}
 
 static emb_type_t * emb_type_new(const char *name)
 {
@@ -30,9 +18,7 @@ static emb_type_t * emb_type_new(const char *name)
 	type->name = malloc(len + 1);
 	strcpy(type->name, name);
 
-	type->callbacks = gds_hash_map_new(16,
-		(gds_hash_cb) emb_callback_name_hash,
-		(gds_cmpkey_cb) strcmp);
+	type->callbacks = emb_hash_table_new(16);
 
 	return type;
 }
@@ -88,27 +74,24 @@ const char * emb_type_get_name(emb_type_id_t type_id)
 int emb_type_register_callback(emb_type_id_t type_id, const char *name,
 	void *callback)
 {
-	gds_hash_map_t *callbacks;
-	char *key;
+	emb_hash_table_t *callbacks;
 
 	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
 		return -1;
 
 	callbacks = emb_types[type_id]->callbacks;
-	key = malloc(strlen(name) + 1);
-	strcpy(key, name);
 
-	return gds_hash_map_set(callbacks, key, callback, free, NULL);
+	return emb_hash_table_set(callbacks, name, callback, NULL);
 }
 
 void * emb_type_get_callback(emb_type_id_t type_id, const char *name)
 {
-	gds_hash_map_t *callbacks;
+	emb_hash_table_t *callbacks;
 
 	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
 		return NULL;
 
 	callbacks = emb_types[type_id]->callbacks;
 
-	return gds_hash_map_get(callbacks, name);
+	return emb_hash_table_get(callbacks, name);
 }

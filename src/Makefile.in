@@ -1,8 +1,8 @@
 include ../config.mk
 
 CFLAGS := -Wall -Wextra -Werror -g -std=c99 $(CFLAGS)
-CPPFLAGS := -I../include $(CPPFLAGS) $(shell pkg-config --cflags libgends)
-LDFLAGS := $(LDFLAGS) $(shell pkg-config --libs libgends)
+CPPFLAGS := -I../include $(CPPFLAGS)
+LDFLAGS := $(LDFLAGS)
 LIBTOOL_CURRENT := @LIBTOOL_CURRENT@
 LIBTOOL_REVISION := @LIBTOOL_REVISION@
 LIBTOOL_AGE := @LIBTOOL_AGE@
