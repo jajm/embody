@@ -62,9 +62,18 @@ emb_container_new(
 	void *data_p
 );
 
-/* Alias for emb_container_new(). */
-#define emb_new(type, data_p) \
-	emb_container_new(type, data_p)
+/* Create a new container using type name.
+ *
+ * Parameters
+ *   type_name : Name of type (const char *)
+ *   data_p    : Pointer to data (void *)
+ *
+ * Returns
+ *   Pointer to pointer to the data (void **)
+ *   NULL on failure
+ */
+#define emb_new(type_name, data_p) \
+	emb_container_new(emb_type_get(type_name), data_p)
 
 /* Retrieves type from data pointer
  *

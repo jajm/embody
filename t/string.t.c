@@ -17,7 +17,7 @@ int main()
 	string_type = emb_type_get("string");
 	emb_type_register_callback(string_type, "free", free);
 
-	string = (char **) emb_new(string_type, s);
+	string = (char **) emb_container_new(string_type, s);
 	str_eq(*string, buf);
 
 	*string = realloc(*string, strlen(*string) * 2 + 1);

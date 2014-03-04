@@ -33,7 +33,7 @@
 		} \
 		data_p = malloc(sizeof(type)); \
 		*data_p = data; \
-		return (type **) emb_new(name##_type, data_p); \
+		return (type **) emb_container_new(name##_type, data_p); \
 	}
 
 emb_default_type_func_def(int, int)

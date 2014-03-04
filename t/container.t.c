@@ -13,7 +13,7 @@ int main()
 
 	emb_type_t *integer_type = emb_type_get("integer");
 	emb_type_register_callback(integer_type, "free", free);
-	integer_pp = (int **)emb_new(integer_type, integer_p);
+	integer_pp = (int **)emb_new("integer", integer_p);
 
 	isnt(integer_pp, NULL);
 	is(*integer_pp, integer_p);
@@ -27,7 +27,7 @@ int main()
 
 	emb_free(integer_pp);
 
-	integer_pp = (int **) emb_new(integer_type, malloc(sizeof(int)));
+	integer_pp = (int **) emb_new("integer", malloc(sizeof(int)));
 	**integer_pp = 21;
 	emb_free(integer_pp);
 
