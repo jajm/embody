@@ -22,10 +22,10 @@
 #include "hash_table.h"
 #include "type.h"
 
-typedef struct {
+struct emb_type_s {
 	char *name;
 	emb_hash_table_t *callbacks;
-} emb_type_t;
+};
 
 static emb_type_t * emb_type_new(const char *name)
 {
@@ -42,75 +42,54 @@ static emb_type_t * emb_type_new(const char *name)
 	return type;
 }
 
-static emb_type_t **emb_types = NULL;
-static size_t emb_types_size = 0;
+static emb_hash_table_t *emb_types = NULL;
 
 static void emb_types_initialize(void)
 {
 	if (emb_types == NULL) {
-		emb_types_size = 256;
-		emb_types = calloc(emb_types_size, sizeof(emb_type_t *));
+		emb_types = emb_hash_table_new(256);
 	}
 }
 
-emb_type_id_t emb_type_get_id(const char *name)
+emb_type_t * emb_type_get(const char *name)
 {
-	emb_type_id_t i = 0;
+	emb_type_t *type;
 
 	emb_types_initialize();
 
-	while (i < emb_types_size && emb_types[i] != NULL) {
-		if (strcmp(emb_types[i]->name, name) == 0) {
-			break;
-		}
-		i++;
+	type = emb_hash_table_get(emb_types, name);
+	if (type == NULL) {
+		type = emb_type_new(name);
+		emb_hash_table_set(emb_types, name, type, NULL);
 	}
 
-	if (i >= emb_types_size) {
-		emb_types = realloc(emb_types, emb_types_size * 2 * sizeof(emb_type_t *));
-		memset(emb_types + emb_types_size, 0, emb_types_size * sizeof(emb_type_t *));
-		emb_types_size = emb_types_size * 2;
-	}
-
-	if (emb_types[i] == NULL) {
-		emb_types[i] = emb_type_new(name);
-	}
-
-	return i;
+	return type;
 }
 
-const char * emb_type_get_name(emb_type_id_t type_id)
+const char * emb_type_get_name(emb_type_t *type)
 {
-	const char *name = NULL;
-
-	if (type_id < emb_types_size && emb_types[type_id] != NULL) {
-		name = emb_types[type_id]->name;
+	if (type == NULL) {
+		return NULL;
 	}
 
-	return name;
+	return type->name;
 }
 
-int emb_type_register_callback(emb_type_id_t type_id, const char *name,
+int emb_type_register_callback(emb_type_t *type, const char *name,
 	void *callback)
 {
-	emb_hash_table_t *callbacks;
-
-	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
+	if (type == NULL) {
 		return -1;
+	}
 
-	callbacks = emb_types[type_id]->callbacks;
-
-	return emb_hash_table_set(callbacks, name, callback, NULL);
+	return emb_hash_table_set(type->callbacks, name, callback, NULL);
 }
 
-void * emb_type_get_callback(emb_type_id_t type_id, const char *name)
+void * emb_type_get_callback(emb_type_t *type, const char *name)
 {
-	emb_hash_table_t *callbacks;
-
-	if (type_id >= emb_types_size || emb_types[type_id] == NULL)
+	if (type == NULL) {
 		return NULL;
+	}
 
-	callbacks = emb_types[type_id]->callbacks;
-
-	return emb_hash_table_get(callbacks, name);
+	return emb_hash_table_get(type->callbacks, name);
 }

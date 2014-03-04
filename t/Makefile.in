@@ -11,7 +11,7 @@ all: $(PROGRAMS)
 $(PROGRAMS): % : %.o ../src/$(LIBRARY_NAME)
 	$(LIBTOOL) --mode=link $(CC) $(LDFLAGS) -o $@ $^
 
-%.o: %.c
+%.o: %.c ../src/$(LIBRARY_NAME)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
 clean:

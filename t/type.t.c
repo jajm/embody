@@ -4,41 +4,41 @@
 
 int main()
 {
-	emb_type_id_t type1_id, type2_id;
+	emb_type_t *type1, *type2;
 	char buffer[512];
 	int i;
 
 	plan(17);
 
-	type1_id = emb_type_get_id("type1");
-	type2_id = emb_type_get_id("type2");
+	type1 = emb_type_get("type1");
+	type2 = emb_type_get("type2");
 
-	ok(type1_id != type2_id);
-	is(type1_id, emb_type_get_id("type1"));
-	is(type2_id, emb_type_get_id("type2"));
+	ok(type1 != type2);
+	is(type1, emb_type_get("type1"));
+	is(type2, emb_type_get("type2"));
 
-	str_eq(emb_type_get_name(type1_id), "type1");
-	str_eq(emb_type_get_name(type2_id), "type2");
+	str_eq(emb_type_get_name(type1), "type1");
+	str_eq(emb_type_get_name(type2), "type2");
 
-	is(emb_type_get_name((emb_type_id_t)-1), NULL);
+	is(emb_type_get_name(NULL), NULL);
 
-	is(emb_type_register_callback(type1_id, "free", free), 0);
-	is(emb_type_get_callback(type1_id, "free"), free);
-	is(emb_type_register_callback(type1_id, "free", main), 1);
-	is(emb_type_get_callback(type1_id, "free"), main);
-	is(emb_type_get_callback(type1_id, "fre"), NULL);
-	is(emb_type_get_callback(type1_id, "freee"), NULL);
-	is(emb_type_get_callback(type1_id, "FREE"), NULL);
-	is(emb_type_get_callback(type2_id, "free"), NULL);
-	is(emb_type_get_callback((emb_type_id_t)-1, "free"), NULL);
+	is(emb_type_register_callback(type1, "free", free), 0);
+	is(emb_type_get_callback(type1, "free"), free);
+	is(emb_type_register_callback(type1, "free", main), 1);
+	is(emb_type_get_callback(type1, "free"), main);
+	is(emb_type_get_callback(type1, "fre"), NULL);
+	is(emb_type_get_callback(type1, "freee"), NULL);
+	is(emb_type_get_callback(type1, "FREE"), NULL);
+	is(emb_type_get_callback(type2, "free"), NULL);
+	is(emb_type_get_callback(NULL, "free"), NULL);
 
-	is(emb_type_register_callback((emb_type_id_t)-1, "free", free), -1);
+	is(emb_type_register_callback(NULL, "free", free), -1);
 
 	for (i = 0; i < 512; i++) {
 		sprintf(buffer, "type_%03d", i);
-		emb_type_get_id(buffer);
+		emb_type_get(buffer);
 	}
-	pass("Generate a lot of type id without segfault");
+	pass("Generate a lot of type without segfault");
 
 	return 0;
 }

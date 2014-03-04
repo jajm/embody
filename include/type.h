@@ -20,35 +20,34 @@
 #ifndef emb_type_h_included
 #define emb_type_h_included
 
-typedef unsigned short int emb_type_id_t;
+typedef struct emb_type_s emb_type_t;
 
-/* Get integer identifier of type identified by string <name>.
+/* Get type identified by string <name>.
  *
- * If type doesn't exist yet, it is created and its integer identifier is
- * returned.
+ * If type doesn't exist yet, it is created.
  *
  * Parameters
  *   name : Name of type.
  *
  * Returns
- *   The integer identifier of type.
+ *   Pointer to the type.
  */
-emb_type_id_t
-emb_type_get_id(
+emb_type_t *
+emb_type_get(
 	const char *name
 );
 
 /* Get name of type.
  *
  * Parameters
- *   type_id : Integer identifier of type.
+ *   type : Pointer to the type.
  *
  * Returns
  *   The name of type.
  */
 const char *
 emb_type_get_name(
-	emb_type_id_t type_id
+	emb_type_t *type
 );
 
 /* Register a callback for a type.
@@ -56,7 +55,7 @@ emb_type_get_name(
  * Callbacks can later be retrieved with emb_type_get_callback().
  *
  * Parameters
- *   type_id  : Integer identifier of type.
+ *   type     : Pointer to the type.
  *   name     : Name of callback.
  *   callback : Pointer to callback.
  *
@@ -68,7 +67,7 @@ emb_type_get_name(
  */
 int
 emb_type_register_callback(
-	emb_type_id_t type_id,
+	emb_type_t *type,
 	const char *name,
 	void *callback
 );
@@ -76,8 +75,8 @@ emb_type_register_callback(
 /* Retrieve callback
  *
  * Parameters
- *   type_id : Integer identifier of type.
- *   name    : Name of callback.
+ *   type : Pointer to the type.
+ *   name : Name of callback.
  *
  * Returns
  *   Pointer to callback.
@@ -85,7 +84,7 @@ emb_type_register_callback(
  */
 void *
 emb_type_get_callback(
-	emb_type_id_t type_id,
+	emb_type_t *type,
 	const char *name
 );
 

@@ -30,27 +30,27 @@
  *
  * Example:
  *
- *   emb_type_id_t string_type_id = emb_type_get_id("string");
+ *   emb_type_t *string_type = emb_type_get("string");
  *   char *string = "Hello, world!\n";
- *   char **string_p = emb_container_new(string_type_id, string);
+ *   char **string_p = emb_container_new(string_type, string);
  *
  *   printf("%s", *string_p);
- *   printf("type id: %s\n", emb_container_type_id(string_p));
+ *   printf("type: %s\n", emb_type_get_name(emb_container_type(string_p)));
  *
  *   // You can still modify your data
  *   *string_p = realloc(*string_p, 80);
  *   *string_p = strcat(*string_p, "foo bar baz\n");
  *
  *   // Don't forget to free
- *   emb_type_register_callback(string_type_id, "free", free);
+ *   emb_type_register_callback(string_type, "free", free);
  *   emb_container_free(string_p);
  */
 
 /* Create a new container
  *
  * Parameters
- *   type_id : Integer identifier of type.
- *   data_p  : Pointer to data.
+ *   type   : Pointer to the type.
+ *   data_p : Pointer to data.
  *
  * Returns
  *   Pointer to pointer to the data.
@@ -58,30 +58,30 @@
  */
 void **
 emb_container_new(
-	emb_type_id_t type_id,
+	emb_type_t *type,
 	void *data_p
 );
 
 /* Alias for emb_container_new(). */
-#define emb_new(type_id, data_p) \
-	emb_container_new(type_id, data_p)
+#define emb_new(type, data_p) \
+	emb_container_new(type, data_p)
 
-/* Retrieves type identifier from data pointer
+/* Retrieves type from data pointer
  *
  * Parameters
  *   data_pp : Pointer to pointer to data, as returned by emb_container_new().
  *
  * Returns
- *   Integer identifier of type.
+ *   Pointer to the type.
  */
-emb_type_id_t
-emb_container_type_id(
+emb_type_t *
+emb_container_type(
 	void **data_pp
 );
 
 /* Alias for emb_container_type_id(). */
-#define emb_type_id(data_pp) \
-	emb_container_type_id((void **)data_pp)
+#define emb_type(data_pp) \
+	emb_container_type((void **)data_pp)
 
 /* Retrieves type name from data pointer.
  *
@@ -91,8 +91,8 @@ emb_container_type_id(
  * Returns
  *   Name of type.
  */
-#define emb_type(data_pp) \
-	emb_type_get_name(emb_type_id(data_pp))
+#define emb_type_name(data_pp) \
+	emb_type_get_name(emb_type(data_pp))
 
 /* Destroy container and contained data.
  *

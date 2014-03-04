@@ -6,7 +6,7 @@ int main()
 	char buf[] = "Hello World!\n";
 	char *s;
 	char **string;
-	emb_type_id_t string_type_id;
+	emb_type_t *string_type;
 
 	plan(4);
 
@@ -14,10 +14,10 @@ int main()
 	strcpy(s, buf);
 	str_eq(s, buf);
 
-	string_type_id = emb_type_get_id("string");
-	emb_type_register_callback(string_type_id, "free", free);
+	string_type = emb_type_get("string");
+	emb_type_register_callback(string_type, "free", free);
 
-	string = (char **) emb_new(string_type_id, s);
+	string = (char **) emb_new(string_type, s);
 	str_eq(*string, buf);
 
 	*string = realloc(*string, strlen(*string) * 2 + 1);

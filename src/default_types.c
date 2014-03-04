@@ -23,17 +23,17 @@
 #include "default_types.h"
 
 #define emb_default_type_func_def(type, name) \
-	static emb_type_id_t name##_type_id = -1; \
+	static emb_type_t *name##_type = NULL; \
 	type ** emb_new_##name(type data) \
 	{ \
 		type *data_p; \
-		if (name##_type_id == (emb_type_id_t)-1) { \
-			name##_type_id = emb_type_get_id(#name); \
-			emb_type_register_callback(name##_type_id, "free", free); \
+		if (name##_type == NULL) { \
+			name##_type = emb_type_get(#name); \
+			emb_type_register_callback(name##_type, "free", free); \
 		} \
 		data_p = malloc(sizeof(type)); \
 		*data_p = data; \
-		return (type **) emb_new(name##_type_id, data_p); \
+		return (type **) emb_new(name##_type, data_p); \
 	}
 
 emb_default_type_func_def(int, int)

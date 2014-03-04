@@ -26,27 +26,27 @@
 	(type *)( (char *)ptr - offsetof(type, member) )
 
 typedef struct {
-	emb_type_id_t type_id;
+	emb_type_t *type;
 	void *data;
 } emb_container_t;
 
-void ** emb_container_new(emb_type_id_t type_id, void *data_p)
+void ** emb_container_new(emb_type_t *type, void *data_p)
 {
 	emb_container_t *embc;
 
 	embc = malloc(sizeof(emb_container_t));
-	embc->type_id = type_id;
+	embc->type = type;
 	embc->data = data_p;
 
 	return &(embc->data);
 }
 
-emb_type_id_t emb_container_type_id(void **data_pp)
+emb_type_t * emb_container_type(void **data_pp)
 {
 	emb_container_t *embc;
 
 	embc = container_of(data_pp, emb_container_t, data);
-	return embc->type_id;
+	return embc->type;
 }
 
 void emb_container_free(void **data_pp)
@@ -56,7 +56,7 @@ void emb_container_free(void **data_pp)
 	
 	embc = container_of(data_pp, emb_container_t, data);
 
-	free_callback = emb_type_get_callback(embc->type_id, "free");
+	free_callback = emb_type_get_callback(embc->type, "free");
 	if (free_callback) {
 		free_callback(embc->data);
 	}
