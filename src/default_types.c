@@ -23,9 +23,9 @@
 #include "default_types.h"
 
 #define emb_default_type_func_def(type, name) \
-	static emb_type_t *name##_type = NULL; \
 	type ** emb_new_##name(type data) \
 	{ \
+		static emb_type_t *name##_type = NULL; \
 		type *data_p; \
 		if (name##_type == NULL) { \
 			name##_type = emb_type_get(#name); \
@@ -36,13 +36,20 @@
 		return (type **) emb_container_new(name##_type, data_p); \
 	}
 
+emb_default_type_func_def(short, short)
 emb_default_type_func_def(int, int)
+emb_default_type_func_def(long, long)
+emb_default_type_func_def(long long, longlong)
+
 emb_default_type_func_def(int8_t, int8)
 emb_default_type_func_def(int16_t, int16)
 emb_default_type_func_def(int32_t, int32)
 emb_default_type_func_def(int64_t, int64)
 
-emb_default_type_func_def(double, double)
 emb_default_type_func_def(float, float)
+emb_default_type_func_def(double, double)
+emb_default_type_func_def(long double, longdouble)
 
 emb_default_type_func_def(char, char)
+
+emb_default_type_func_def(_Bool, bool)
