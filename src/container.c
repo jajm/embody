@@ -54,12 +54,14 @@ void emb_container_free(void **data_pp)
 	emb_container_t *embc;
 	void (*free_callback)(void *) = NULL;
 	
-	embc = container_of(data_pp, emb_container_t, data);
+	if (data_pp != NULL) {
+		embc = container_of(data_pp, emb_container_t, data);
 
-	free_callback = emb_type_get_callback(embc->type, "free");
-	if (free_callback) {
-		free_callback(embc->data);
+		free_callback = emb_type_get_callback(embc->type, "free");
+		if (free_callback) {
+			free_callback(embc->data);
+		}
+		embc->data = NULL;
+		free(embc);
 	}
-	embc->data = NULL;
-	free(embc);
 }
