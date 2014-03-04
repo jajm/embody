@@ -6,7 +6,7 @@ int main()
 	int *integer_p;
 	int **integer_pp;
 
-	plan(9);
+	plan(7);
 
 	integer_p = malloc(sizeof(int));
 	*integer_p = 42;
@@ -26,12 +26,10 @@ int main()
 	str_eq(emb_type_name(integer_pp), "integer");
 
 	emb_free(integer_pp);
-	is(*integer_pp, NULL);
 
 	integer_pp = (int **) emb_new(integer_type, malloc(sizeof(int)));
 	**integer_pp = 21;
 	emb_free(integer_pp);
-	is(*integer_pp, NULL);
 
 	emb_free(NULL);
 	pass("emb_free(NULL) does not fail");

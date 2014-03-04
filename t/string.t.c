@@ -8,7 +8,7 @@ int main()
 	char **string;
 	emb_type_t *string_type;
 
-	plan(4);
+	plan(3);
 
 	s = calloc(strlen(buf) + 1, sizeof(char));
 	strcpy(s, buf);
@@ -25,7 +25,6 @@ int main()
 	str_eq(*string, "Hello World!\nHello World!\n");
 
 	emb_free(string);
-	is(*string, NULL);
 
 	return 0;
 }
