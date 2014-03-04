@@ -17,6 +17,7 @@
  * along with embody.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include "type.h"
@@ -35,6 +36,11 @@ void ** emb_container_new(emb_type_t *type, void *data_p)
 	emb_container_t *embc;
 
 	embc = malloc(sizeof(emb_container_t));
+	if (embc == NULL) {
+		fprintf(stderr, "Memory allocation error\n");
+		return NULL;
+	}
+
 	embc->type = type;
 	embc->data = data_p;
 
@@ -44,6 +50,10 @@ void ** emb_container_new(emb_type_t *type, void *data_p)
 emb_type_t * emb_container_type(void **data_pp)
 {
 	emb_container_t *embc;
+
+	if (data_pp == NULL) {
+		return NULL;
+	}
 
 	embc = container_of(data_pp, emb_container_t, data);
 	return embc->type;
