@@ -4,7 +4,12 @@ PKGCONFIG_FILES := $(wildcard *.pc)
 
 .PHONY: lib test install clean
 
-all: lib test
+TARGETS := lib
+ifeq "$(BUILD_TESTS)" "yes"
+	TARGETS := $(TARGETS) test
+endif
+
+all: $(TARGETS)
 
 lib:
 	$(MAKE) -C src

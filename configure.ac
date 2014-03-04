@@ -1,11 +1,16 @@
 AC_INIT([embody], [0.1], [jajm@jajm.org])
 
-LIBTOOL_CURRENT=0
-LIBTOOL_REVISION=0
-LIBTOOL_AGE=0
-AC_SUBST(LIBTOOL_CURRENT)
-AC_SUBST(LIBTOOL_REVISION)
-AC_SUBST(LIBTOOL_AGE)
+AC_SUBST(LIBTOOL_CURRENT, 0)
+AC_SUBST(LIBTOOL_REVISION, 0)
+AC_SUBST(LIBTOOL_AGE, 0)
+
+AC_CHECK_HEADERS([stdio.h stdlib.h stddef.h string.h stdint.h])
+
+AC_CHECK_HEADERS([libtap13/tap.h], AC_SUBST(HAVE_LIBTAP13_TAP_H, yes))
+AC_CHECK_LIB(tap13, tap_ok, AC_SUBST(HAVE_LIBTAP13, yes))
+
+AS_IF([test "x$HAVE_LIBTAP13" = "xyes" && test "x$HAVE_LIBTAP13_TAP_H" = "xyes"],
+	AC_SUBST(BUILD_TESTS, yes))
 
 AC_CONFIG_FILES([
 	Makefile
@@ -17,3 +22,8 @@ AC_CONFIG_FILES([
 ])
 
 AC_OUTPUT
+
+if test "$BUILD_TESTS" != "yes"; then
+	echo ""
+	echo "Tests won't be built: libtap13 is missing."
+fi
