@@ -1,0 +1,23 @@
+Source: libembody
+Priority: extra
+Maintainer: Julian Maurice <jajm@jajm.org>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://git.jajm.org/embody/
+
+Package: libembody-dev
+Section: libdevel
+Architecture: any
+Depends: libembody (= ${binary:Version}), ${misc:Depends}
+Description: C library to define types for your data (development files)
+ Embody is a C library that lets you define types for your data to
+ allow easier manipulation in structures like arrays and hash maps.
+
+Package: libembody
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C library to define types for your data
+ Embody is a C library that lets you define types for your data to
+ allow easier manipulation in structures like arrays and hash maps.

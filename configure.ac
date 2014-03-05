@@ -1,4 +1,4 @@
-AC_INIT([embody], [0.1], [jajm@jajm.org])
+AC_INIT([embody], [1.0.0], [jajm@jajm.org])
 
 AC_SUBST(LIBTOOL_CURRENT, 0)
 AC_SUBST(LIBTOOL_REVISION, 0)
