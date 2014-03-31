@@ -1,7 +1,0 @@
-The Debian Package libembody
-----------------------------
-
-Embody is a C library that lets you define types for your data to
-allow easier manipulation in structures like arrays and hash maps.
-
- -- Julian Maurice <jajm@jajm.org>  Wed, 05 Mar 2014 20:33:36 +0200
