@@ -1,4 +1,8 @@
+AC_PREREQ([2.67])
+LT_PREREQ([2.2])
+
 AC_INIT([embody], [1.0.0], [jajm@jajm.org])
+LT_INIT()
 
 AC_SUBST(LIBTOOL_CURRENT, 0)
 AC_SUBST(LIBTOOL_REVISION, 0)
