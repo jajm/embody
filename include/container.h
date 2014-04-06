@@ -120,4 +120,18 @@ emb_container_free(
 #define emb_free(data_pp) \
 	emb_container_free(data_pp)
 
+/* Destroy container only and leave data intact.
+ *
+ * Parameters
+ *   data_pp : Pointer to pointer to data, as returned by emb_container_new().
+ */
+void
+emb_container_destroy(
+	void *data_pp
+);
+
+/* Alias for emb_container_destroy(). */
+#define emb_destroy(data_pp) \
+	emb_container_destroy(data_pp)
+
 #endif /* ! emb_container_h_included */
