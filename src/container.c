@@ -31,7 +31,7 @@ typedef struct {
 	void *data;
 } emb_container_t;
 
-void ** emb_container_new(emb_type_t *type, void *data_p)
+void * emb_container_new(emb_type_t *type, void *data_p)
 {
 	emb_container_t *embc;
 
@@ -47,7 +47,7 @@ void ** emb_container_new(emb_type_t *type, void *data_p)
 	return &(embc->data);
 }
 
-emb_type_t * emb_container_type(void **data_pp)
+emb_type_t * emb_container_type(void *data_pp)
 {
 	emb_container_t *embc;
 
@@ -59,7 +59,7 @@ emb_type_t * emb_container_type(void **data_pp)
 	return embc->type;
 }
 
-void emb_container_free(void **data_pp)
+void emb_container_free(void *data_pp)
 {
 	emb_container_t *embc;
 	void (*free_callback)(void *) = NULL;
