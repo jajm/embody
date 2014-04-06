@@ -63,7 +63,7 @@ void emb_container_free(void *data_pp)
 {
 	emb_container_t *embc;
 	void (*free_callback)(void *) = NULL;
-	
+
 	if (data_pp != NULL) {
 		embc = container_of(data_pp, emb_container_t, data);
 
@@ -72,6 +72,16 @@ void emb_container_free(void *data_pp)
 			free_callback(embc->data);
 		}
 		embc->data = NULL;
+		free(embc);
+	}
+}
+
+void emb_container_destroy(void *data_pp)
+{
+	emb_container_t *embc;
+
+	if (data_pp != NULL) {
+		embc = container_of(data_pp, emb_container_t, data);
 		free(embc);
 	}
 }

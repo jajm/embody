@@ -34,5 +34,10 @@ int main()
 	emb_free(NULL);
 	pass("emb_free(NULL) does not fail");
 
+	integer_pp = emb_new("integer", malloc(sizeof(int)));
+	integer_p = *integer_pp;
+	emb_destroy(integer_pp);
+	free(integer_p);
+
 	return 0;
 }
