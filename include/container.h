@@ -56,7 +56,7 @@
  *   Pointer to pointer to the data.
  *   You will need this pointer to use the functions below.
  */
-void **
+void *
 emb_container_new(
 	emb_type_t *type,
 	void *data_p
@@ -69,7 +69,7 @@ emb_container_new(
  *   data_p    : Pointer to data (void *)
  *
  * Returns
- *   Pointer to pointer to the data (void **)
+ *   Pointer to pointer to the data (void *)
  *   NULL on failure
  */
 #define emb_new(type_name, data_p) \
@@ -85,12 +85,12 @@ emb_container_new(
  */
 emb_type_t *
 emb_container_type(
-	void **data_pp
+	void *data_pp
 );
 
-/* Alias for emb_container_type_id(). */
+/* Alias for emb_container_type(). */
 #define emb_type(data_pp) \
-	emb_container_type((void **)data_pp)
+	emb_container_type(data_pp)
 
 /* Retrieves type name from data pointer.
  *
@@ -113,11 +113,11 @@ emb_container_type(
  */
 void
 emb_container_free(
-	void **data_pp
+	void *data_pp
 );
 
 /* Alias for emb_container_free(). */
 #define emb_free(data_pp) \
-	emb_container_free((void **)data_pp)
+	emb_container_free(data_pp)
 
 #endif /* ! emb_container_h_included */
