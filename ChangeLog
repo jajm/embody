@@ -1,5 +1,9 @@
 2014-04-06  Julian Maurice  <jajm@jajm.org>
 
+	* configure.ac: New release 1.1.0
+
+2014-04-06  Julian Maurice  <jajm@jajm.org>
+
 	* src/default_types.c: Declare unsigned types as real types
 
 	* src/container.c (emb_container_new, emb_container_type)
