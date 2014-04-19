@@ -6,13 +6,20 @@ int main()
 	int *integer_p;
 	int **integer_pp;
 
-	plan(7);
+	plan(11);
 
 	integer_p = malloc(sizeof(int));
 	*integer_p = 42;
 
 	emb_type_t *integer_type = emb_type_get("integer");
 	emb_type_register_callback(integer_type, "free", free);
+
+	integer_pp = emb_container_snew(integer_type, integer_p);
+	isnt(integer_pp, NULL);
+	is(*integer_pp, integer_p);
+	is(**integer_pp, 42);
+	str_eq(emb_type_name(integer_pp), "integer");
+
 	integer_pp = emb_new("integer", integer_p);
 
 	isnt(integer_pp, NULL);
