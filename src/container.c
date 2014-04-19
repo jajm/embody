@@ -26,11 +26,6 @@
 #define container_of(ptr, type, member) \
 	(type *)( (char *)ptr - offsetof(type, member) )
 
-typedef struct {
-	emb_type_t *type;
-	void *data;
-} emb_container_t;
-
 void * emb_container_new(emb_type_t *type, void *data_p)
 {
 	emb_container_t *embc;

@@ -22,6 +22,11 @@
 
 #include "type.h"
 
+typedef struct {
+	emb_type_t *type;
+	void *data;
+} emb_container_t;
+
 /* How to use containers.
  *
  * Containers allow to store a type identifier besides your data.
@@ -74,6 +79,32 @@ emb_container_new(
  */
 #define emb_new(type_name, data_p) \
 	emb_container_new(emb_type_get(type_name), data_p)
+
+/* Create a new container on the stack
+ *
+ * Parameters
+ *   type   : Pointer to the type (emb_type_t *)
+ *   data_p : Pointer to data (void *)
+ *
+ * Returns
+ *   Pointer to pointer to the data (void *)
+ *   NULL on failure
+ */
+#define emb_container_snew(type, data_p) \
+	(void *)&(((emb_container_t){type, data_p}).data)
+
+/* Create a new container on the stack using type name.
+ *
+ * Parameters
+ *   type_name : Name of type (const char *)
+ *   data_p    : Pointer to data (void *)
+ *
+ * Returns
+ *   Pointer to pointer to the data (void *)
+ *   NULL on failure
+ */
+#define emb_snew(type_name, data_p) \
+	emb_container_snew(emb_type_get(type_name), data_p)
 
 /* Retrieves type from data pointer
  *
